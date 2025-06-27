@@ -24,6 +24,14 @@ public class Mascota {
         this.idUsuario = idUsuario;
     }
 
+    // Constructor para editar mascota sin modificar el idUsuario
+    public Mascota(int id, String nombre, String especie, String raza) {
+    this.id = id;
+    this.nombre = nombre;
+    this.especie = especie;
+    this.raza = raza;
+    }
+    
     public int getId() { return id; }
     public String getNombre() { return nombre; }
     public String getEspecie() { return especie; }

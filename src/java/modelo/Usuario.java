@@ -36,4 +36,17 @@ public class Usuario {
     public void setContraseña(String password) {
         this.password = password;
     }
+    
+    public void setNombre(String nombre) {
+    this.nombre = nombre;
+    }
+
+    public void setEmail(String email) {
+    this.email = email;
+    }
+
+    public void setTelefono(String telefono) {
+    this.telefono = telefono;
+    }
+
 }

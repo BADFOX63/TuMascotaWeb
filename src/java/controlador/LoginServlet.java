@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("usuario", usuario);
 
                 request.setAttribute("mensaje", "Inicio de sesión exitoso");
-                request.getRequestDispatcher("agendar_cita.jsp").forward(request, response);
+                request.getRequestDispatcher("inicio.jsp").forward(request, response);
             } else {
                 // Usuario inválido
                 request.setAttribute("mensaje", "Correo o password incorrectos");

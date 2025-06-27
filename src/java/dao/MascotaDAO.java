@@ -60,4 +60,21 @@ public class MascotaDAO {
 
         return lista;
     }
+
+public void actualizarMascota(Mascota mascota) throws Exception {
+    String sql = "UPDATE mascota SET nombre = ?, especie = ?, raza = ? WHERE id_mascota = ?";
+
+    try (Connection conn = Conexion.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, mascota.getNombre());
+        stmt.setString(2, mascota.getEspecie());
+        stmt.setString(3, mascota.getRaza());
+        stmt.setInt(4, mascota.getId());
+
+        stmt.executeUpdate();
+    } catch (SQLException e) {
+        throw new Exception("Error al actualizar mascota", e);
+        }
+    }
 }

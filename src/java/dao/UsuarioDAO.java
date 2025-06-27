@@ -67,4 +67,22 @@ public class UsuarioDAO {
 
         return usuario;
     }
+
+public void actualizarPerfil(Usuario usuario) throws Exception {
+    String sql = "UPDATE usuario SET nombre = ?, email = ?, telefono = ?, password = ? WHERE id_usuario = ?";
+
+    try (Connection conn = Conexion.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, usuario.getNombre());
+        stmt.setString(2, usuario.getEmail());
+        stmt.setString(3, usuario.getTelefono());
+        stmt.setString(4, usuario.getContraseña());
+        stmt.setInt(5, usuario.getId());
+
+        stmt.executeUpdate();
+    } catch (SQLException e) {
+        throw new Exception("Error al actualizar perfil", e);
+        }
+    }
 }

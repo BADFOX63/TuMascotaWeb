@@ -2,11 +2,15 @@
 <%@ page import="modelo.Usuario" %>
 <%
     Usuario usuario = (Usuario) session.getAttribute("usuario");
-    String mensaje = (String) request.getAttribute("mensaje");
+    String mensaje = request.getParameter("mensaje");
 %>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <% if ("sesion_cerrada".equals(mensaje)) { %>
+    <div class="mensaje">Has cerrado sesión exitosamente.</div>
+<% } %>
     <meta charset="UTF-8">
     <title>Iniciar Sesión - TuMascota</title>
     <link rel="stylesheet" href="css/estilos.css">
@@ -15,23 +19,22 @@
 <div class="login-container">
     <h2>Iniciar Sesión</h2>
 
-    <% if (mensaje != null) { %>
-        <div class="<%= mensaje.contains("incorrectos") ? "error" : "mensaje" %>">
-            <%= mensaje %>
-        </div>
+    <% if (mensaje != null && mensaje.contains("incorrectos")) { %>
+        <div class="error">Correo o contraseña incorrectos.</div>
     <% } %>
 
     <% if (usuario != null) { %>
-        <p>Bienvenido, <strong><%= usuario.getNombre() %></strong> </p>
-        <a href="logout.jsp">Cerrar sesión</a>
+        <p>Bienvenido, <strong><%= usuario.getNombre() %></strong></p>
+        <a href="CerrarSesionServlet">Cerrar sesión</a>
     <% } else { %>
         <form action="LoginServlet" method="post">
-        <input type="email" name="email" required>
-        <input type="password" name="password" required>
-        <input type="submit" value="Ingresar">
+            <input type="email" name="email" placeholder="Correo electrónico" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <input type="submit" value="Ingresar">
         </form>
         <a href="registro.jsp">¿No tienes cuenta? Regístrate</a>
     <% } %>
 </div>
+
 </body>
 </html>

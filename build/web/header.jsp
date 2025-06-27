@@ -1,10 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     modelo.Usuario usuario = (modelo.Usuario) session.getAttribute("usuario");
-    if (usuario == null) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
 %>
 <header class="header">
   <div class="logo-nav-container">
@@ -16,7 +12,12 @@
       <li><a href="inicio.jsp">Inicio</a></li>
       <li><a href="perfil.jsp">Mi perfil</a></li>
       <li><a href="agendar_cita.jsp">Agendar Cita</a></li>
-      <li><a href="logout">Cerrar sesión </a></li>
+      <% if (usuario != null) { %>
+          <li><a href="CerrarSesionServlet">Cerrar sesión</a></li>
+      <% } else { %>
+          <li><a href="login.jsp">Iniciar Sesión</a></li>
+          <li><a href="registro.jsp">Registro</a></li>
+      <% } %>
     </ul>
   </nav>
 </header>

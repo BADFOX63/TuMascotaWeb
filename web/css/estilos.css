@@ -5,11 +5,12 @@
   display: flex;
   flex-direction: column;
 }
-.header {
-  background-color: #007BFF;
-  color: white;
-  padding: 1em;
-  text-align: center;
+body.inicio {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .servicios {
@@ -62,7 +63,7 @@
 }
 
 /*Header y footer*/
-.header {
+.header.header{
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -226,13 +227,81 @@ font-size: 14px;
 }
 
 .mensaje {
-margin-top: 10px;
-color: green;
+    color: green;
+    background-color: #e8f5e9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 .error {
 margin-top: 10px;
 color: red;
+}
+
+/*Perfil*/
+
+body.perfil {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.perfil-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.perfil-datos, .perfil-mascotas, .perfil-citas {
+  margin-bottom: 40px;
+}
+
+
+.perfil-datos h3,
+.perfil-mascotas h3,
+.perfil-citas h3 {
+  margin-bottom: 15px;
+  color: #333;
+  border-bottom: 2px solid #007BFF;
+  padding-bottom: 5px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+form input[type="submit"] {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background-color 0.3s;
+}
+
+form input[type="submit"]:hover {
+  background-color: #0056b3;
 }
 
 /*agendar_cita*/
