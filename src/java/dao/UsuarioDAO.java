@@ -21,13 +21,13 @@ public class UsuarioDAO {
 
             // Validar si se insertó correctamente
             if (filas > 0) {
-                System.out.println("✅ Usuario registrado exitosamente.");
+                System.out.println("Usuario registrado exitosamente.");
             } else {
-                System.out.println("⚠️ No se insertó ningún usuario.");
+                System.out.println("No se insertó ningún usuario.");
             }
 
         } catch (SQLException e) {
-            System.err.println("❌ Error en registrarUsuario: " + e.getMessage());
+            System.err.println("Error en registrarUsuario: " + e.getMessage());
             throw new Exception("Error al registrar usuario", e);
         }
     }
@@ -43,24 +43,25 @@ public class UsuarioDAO {
             stmt.setString(1, email);
             stmt.setString(2, password);
 
-            System.out.println("🟡 Ejecutando login con email: " + email);
+            System.out.println("Ejecutando login con email: " + email);
 
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
                 usuario = new Usuario(
+                    rs.getInt("id_usuario"),
                     rs.getString("nombre"),
                     rs.getString("email"),
                     rs.getString("telefono"),
                     rs.getString("password")
                 );
-                System.out.println("✅ Usuario encontrado: " + usuario.getNombre());
+                System.out.println("Usuario encontrado: " + usuario.getNombre());
             } else {
-                System.out.println("⚠️ Usuario no encontrado o password incorrecta.");
+                System.out.println("Usuario no encontrado o password incorrecta.");
             }
 
         } catch (SQLException e) {
-            System.err.println("❌ Error en validarUsuario: " + e.getMessage());
+            System.err.println("Error en validarUsuario: " + e.getMessage());
             throw new Exception("Error al validar usuario", e);
         }
 

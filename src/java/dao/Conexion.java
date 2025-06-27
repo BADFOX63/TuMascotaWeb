@@ -1,3 +1,4 @@
+//Conexion con mysql workbench
 package dao;
 
 import java.sql.Connection;

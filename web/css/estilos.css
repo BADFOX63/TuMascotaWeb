@@ -1,0 +1,290 @@
+
+/*Estilos inicio.jsp*/
+.page-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  background-color: #007BFF;
+  color: white;
+  padding: 1em;
+  text-align: center;
+}
+
+.servicios {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.servicios ul {
+  list-style-position: inside; 
+  display: inline-block;       
+  text-align: left;           
+  padding: 0;
+  margin: 0 auto;
+}
+.nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 0;
+}
+
+.nav a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.main-content {
+  padding: 2em;
+  text-align: center;
+}
+
+.imagen-principal {
+  width: 300px;
+  margin-top: 1em;
+}
+
+
+/*LOGO*/
+.logo-nav-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 120px; 
+  height: auto;
+}
+
+/*Header y footer*/
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 20px;
+}
+
+.footer {
+  background-color: #f1f1f1;
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 0;
+}
+
+.nav a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+/*Registro*/
+body.registro {
+font-family: 'Segoe UI', sans-serif;
+background-color: #f0f2f5;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+margin: 0;
+    }
+
+.form-container {
+background-color: white;
+padding: 40px;
+border-radius: 12px;
+box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+width: 100%;
+max-width: 400px;
+}
+
+.form-container h2 {
+margin-bottom: 20px;
+text-align: center;
+color: #007BFF;
+}
+
+.form-group {
+margin-bottom: 15px;
+}
+
+label {
+display: block;
+font-weight: bold;
+margin-bottom: 5px;
+}
+
+input {
+width: 100%;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 6px;
+}
+
+input:focus {
+outline: none;
+border-color: #007BFF;
+}
+
+.btn {
+background-color: #007BFF;
+color: white;
+padding: 12px;
+width: 100%;
+border: none;
+border-radius: 6px;
+font-size: 16px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+background-color: #0056b3;
+}
+
+.back-link {
+display: block;
+text-align: center;
+margin-top: 15px;
+color: #007BFF;
+text-decoration: none;
+}
+
+.back-link:hover {
+text-decoration: underline;
+}
+
+
+/*Login*/
+body.login{
+font-family: Arial, sans-serif;
+background-color: #f2f2f2;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+margin: 0;
+        }
+
+.login-container {
+background-color: white;
+padding: 30px 40px;
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(0,0,0,0.2);
+text-align: center;
+width: 300px;
+}
+
+.login-container h2 {
+margin-bottom: 20px;
+color: #007BFF;
+}
+
+.login-container input[type="email"],
+.login-container input[type="password"] {
+width: 100%;
+padding: 10px;
+margin: 10px 0;
+border-radius: 5px;
+border: 1px solid #ccc;
+}
+
+.login-container input[type="submit"] {
+background-color: #007BFF;
+color: white;
+border: none;
+padding: 10px;
+width: 100%;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.login-container input[type="submit"]:hover {
+background-color: #0056b3;
+}
+
+.login-container a {
+display: block;
+margin-top: 15px;
+text-decoration: none;
+color: #555;
+font-size: 14px;
+}
+
+.mensaje {
+margin-top: 10px;
+color: green;
+}
+
+.error {
+margin-top: 10px;
+color: red;
+}
+
+/*agendar_cita*/
+
+.agendar-form {
+  background-color: #ffffff;
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 25px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+
+.agendar-form h2 {
+  color: #007BFF;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.agendar-form label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.agendar-form input[type="text"],
+.agendar-form input[type="date"],
+.agendar-form input[type="time"],
+.agendar-form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+.agendar-form input[type="submit"] {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.agendar-form input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+

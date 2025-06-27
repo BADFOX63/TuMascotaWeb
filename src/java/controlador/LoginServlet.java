@@ -19,8 +19,8 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         // Validar que se recibieron correctamente
-        System.out.println("📥 Email: " + email);
-        System.out.println("📥 Contraseña: " + password);
+        System.out.println("Email: " + email);
+        System.out.println("Contraseña: " + password);
 
         try {
             UsuarioDAO dao = new UsuarioDAO();
@@ -31,17 +31,17 @@ public class LoginServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("usuario", usuario);
 
-                request.setAttribute("mensaje", "Inicio de sesión exitoso ✅");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.setAttribute("mensaje", "Inicio de sesión exitoso");
+                request.getRequestDispatcher("agendar_cita.jsp").forward(request, response);
             } else {
                 // Usuario inválido
-                request.setAttribute("mensaje", "Correo o password incorrectos ❌");
+                request.setAttribute("mensaje", "Correo o password incorrectos");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
 
         } catch (Exception e) {
             e.printStackTrace();  // Se mostrará en la consola del servidor
-            request.setAttribute("mensaje", "Error al validar usuario ❌");
+            request.setAttribute("mensaje", "Error al validar usuario");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
