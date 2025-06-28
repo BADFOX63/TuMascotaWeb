@@ -32,7 +32,7 @@
             <input type="password" name="password" placeholder="Contraseña" required>
             <input type="submit" value="Ingresar">
         </form>
-        <a href="registro.jsp">¿No tienes cuenta? Regístrate</a>
+        <a href="registro.html">¿No tienes cuenta? Regístrate</a>
     <% } %>
 </div>
 

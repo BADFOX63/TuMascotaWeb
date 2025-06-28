@@ -107,4 +107,111 @@ public class CitaDAO {
 
         return false;
     }
+    //Obtener todas las citas registradas
+    public List<Cita> obtenerTodasLasCitas() throws Exception {
+    List<Cita> citas = new ArrayList<>();
+    String sql = """
+    SELECT c.id_cita, c.fecha, c.hora, c.estado, c.motivo,
+           m.id_mascota, m.nombre AS nombre_mascota, m.raza, m.especie,
+           u.id_usuario, u.nombre AS nombre_usuario, u.email, u.telefono
+    FROM cita c
+    JOIN mascota m ON c.id_mascota = m.id_mascota
+    JOIN usuario u ON c.id_usuario = u.id_usuario
+    """;
+
+    try (Connection conn = Conexion.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+
+        while (rs.next()) {
+            Cita cita = new Cita(
+                rs.getInt("id_cita"),
+                rs.getString("fecha"),
+                rs.getString("hora"),
+                rs.getString("estado"),
+                rs.getInt("id_mascota"),
+                rs.getInt("id_usuario"),
+                rs.getString("nombre_mascota"),
+                rs.getString("raza"),
+                rs.getString("especie"),
+                rs.getString("nombre_usuario"),
+                rs.getString("email"),
+                rs.getString("telefono"),
+                rs.getString("motivo")
+            );
+            citas.add(cita);
+        }
+    } catch (SQLException e) {
+        throw new Exception("Error al obtener todas las citas", e);
+    }
+    return citas;
+}
+    
+    //Filtrar Citas por correo
+public List<Cita> obtenerCitasPorCorreo(String correo) throws Exception {
+    List<Cita> citas = new ArrayList<>();
+    String sql = """
+        SELECT c.id_cita, c.fecha, c.hora, c.estado, c.motivo,
+               m.id_mascota, m.nombre AS nombre_mascota, m.raza, m.especie,
+               u.id_usuario, u.nombre AS nombre_usuario, u.email, u.telefono
+        FROM cita c
+        JOIN mascota m ON c.id_mascota = m.id_mascota
+        JOIN usuario u ON c.id_usuario = u.id_usuario
+        WHERE u.email LIKE ?
+    """;
+
+    try (Connection conn = Conexion.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, "%" + correo + "%");
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            Cita cita = new Cita(
+                rs.getInt("id_cita"),
+                rs.getString("fecha"),
+                rs.getString("hora"),
+                rs.getString("estado"),
+                rs.getInt("id_mascota"),
+                rs.getInt("id_usuario"),
+                rs.getString("nombre_mascota"),
+                rs.getString("raza"),
+                rs.getString("especie"),
+                rs.getString("nombre_usuario"),
+                rs.getString("email"),
+                rs.getString("telefono"),
+                rs.getString("motivo")
+            );
+            citas.add(cita);
+        }
+
+    } catch (SQLException e) {
+        throw new Exception("Error al filtrar citas por correo", e);
+    }
+
+    return citas;
+}
+
+    
+    //Actualizar el estado de la cita
+public void actualizarEstadoCita(int idCita, String estado, String motivoCancelacion) throws Exception {
+    String sql = "UPDATE cita SET estado = ?, motivo = ? WHERE id_cita = ?";
+
+    try (Connection conn = Conexion.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, estado);
+        if ("Cancelado".equalsIgnoreCase(estado)) {
+            stmt.setString(2, motivoCancelacion);
+        } else {
+            stmt.setNull(2, java.sql.Types.VARCHAR); // Borra motivoCancelacion si no es cancelado
+        }
+        stmt.setInt(3, idCita);
+        stmt.executeUpdate();
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        throw new Exception("Error al actualizar estado de la cita", e);
+    }
+}
 }

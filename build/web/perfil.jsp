@@ -50,29 +50,50 @@
 
     <!-- MASCOTAS -->
     <section class="perfil-mascotas">
-        <h3>Mis Mascotas</h3>
-        <%
-            for (Mascota m : mascotas) {
-        %>
-            <form method="post" action="ActualizarMascotaServlet" class="form-mascota">
-                <input type="hidden" name="id_mascota" value="<%= m.getId() %>">
+    <h3>Mis Mascotas</h3>
 
-                <label>Nombre:</label><br>
-                <input type="text" name="nombre" value="<%= m.getNombre() %>" required><br>
+    <form method="get" action="perfil.jsp">
+        <label>Selecciona una mascota para editar:</label>
+        <select name="id_mascota" required>
+            <option value="">-- Selecciona una mascota --</option>
+            <% for (Mascota m : mascotas) { %>
+                <option value="<%= m.getId() %>">
+                    <%= m.getNombre() %> - <%= m.getEspecie() %> - <%= m.getRaza() %>
+                </option>
+            <% } %>
+        </select>
+        <input type="submit" value="Editar">
+    </form>
+    <hr>
 
-                <label>Especie:</label><br>
-                <input type="text" name="especie" value="<%= m.getEspecie() %>" required><br>
+<%
+    String idMascotaStr = request.getParameter("id_mascota");
+    if (idMascotaStr != null && !idMascotaStr.isEmpty()) {
+        int idMascota = Integer.parseInt(idMascotaStr);
+        for (Mascota m : mascotas) {
+            if (m.getId() == idMascota) {
+%>
+        <!-- Formulario de edición para la mascota seleccionada -->
+        <form method="post" action="ActualizarMascotaServlet" class="form-mascota">
+            <input type="hidden" name="id_mascota" value="<%= m.getId() %>">
 
-                <label>Raza:</label><br>
-                <input type="text" name="raza" value="<%= m.getRaza() %>" required><br><br>
+            <label>Nombre:</label><br>
+            <input type="text" name="nombre" value="<%= m.getNombre() %>" required><br>
 
-                <input type="submit" value="Actualizar Mascota">
-            </form>
-            <hr>
-        <%
+            <label>Especie:</label><br>
+            <input type="text" name="especie" value="<%= m.getEspecie() %>" required><br>
+
+            <label>Raza:</label><br>
+            <input type="text" name="raza" value="<%= m.getRaza() %>" required><br><br>
+
+            <input type="submit" value="Actualizar Mascota">
+        </form>
+<%
             }
-        %>
-    </section>
+        }
+    }
+%>
+</section>
 
     <!-- CITAS -->
     <section class="perfil-citas">

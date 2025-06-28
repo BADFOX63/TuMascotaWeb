@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="modelo.Usuario, modelo.Mascota, dao.MascotaDAO, dao.CitaDAO, java.util.*" %>
+<%@ page import="modelo.Usuario, modelo.Mascota, dao.MascotaDAO, dao.CitaDAO, dao.DisponibilidadDAO, java.util.*" %>
 <%
     Usuario usuario = (Usuario) session.getAttribute("usuario");
     if (usuario == null) {
@@ -8,30 +8,48 @@
     }
 
     String fechaSeleccionada = request.getParameter("fecha");
+
+    List<String> horasDisponibles = new ArrayList<>();
     List<String> horasOcupadas = new ArrayList<>();
+    List<String> horasNoDisponibles = new ArrayList<>();
+    List<String> fechasNoDisponibles = new ArrayList<>();
+    boolean diaBloqueado = false;
+
+    CitaDAO citaDAO = new CitaDAO();
+    DisponibilidadDAO disponibilidadDAO = new DisponibilidadDAO();
+
     if (fechaSeleccionada != null && !fechaSeleccionada.isEmpty()) {
         try {
-            CitaDAO citaDAO = new CitaDAO();
             horasOcupadas = citaDAO.obtenerHorasOcupadas(fechaSeleccionada);
+            horasNoDisponibles = disponibilidadDAO.obtenerHorasNoDisponibles(fechaSeleccionada);
+
+            for (int h = 8; h <= 18; h++) {
+                String hora = (h < 10 ? "0" + h : "" + h) + ":00:00";
+                if (!horasOcupadas.contains(hora) && !horasNoDisponibles.contains(hora)) {
+                    horasDisponibles.add(hora);
+                }
+            }
+
+            diaBloqueado = horasDisponibles.isEmpty(); // No hay horas disponibles
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    List<String> horasDisponibles = new ArrayList<>();
-    for (int h = 8; h <= 17; h++) {
-        String hora = String.format("%02d:00:00", h);
-        if (!horasOcupadas.contains(hora)) {
-            horasDisponibles.add(hora);
-        }
+    try {
+        fechasNoDisponibles = disponibilidadDAO.obtenerFechasBloqueadas(2);
+    } catch (Exception e) {
+        e.printStackTrace();
     }
 
     MascotaDAO mascotaDAO = new MascotaDAO();
     List<Mascota> mascotas = mascotaDAO.obtenerMascotasPorUsuario(usuario.getId());
 %>
 
+
 <!DOCTYPE html>
 <html>
+    
 <head>
     <meta charset="UTF-8">
     <title>Agendar Cita</title>
@@ -45,6 +63,13 @@
 
         window.onload = mostrarCamposMascota;
     </script>
+    <script>
+    const fechasBloqueadas = [
+        <% for (String f : fechasNoDisponibles) { %>
+            "<%= f %>",
+        <% } %>
+    ];
+</script>
 </head>
 <body>
     <h2>Agendar una nueva cita</h2>
@@ -55,11 +80,18 @@
         <br><br>
 
         <label>Hora:</label>
-        <select name="hora" required>
-            <% for (String hora : horasDisponibles) { %>
-                <option value="<%= hora %>"><%= hora %></option>
-            <% } %>
-        </select>
+        <% if (diaBloqueado && fechaSeleccionada != null) { %>
+            <p style="color: red; font-weight: bold;">Este día no está disponible para agendar citas.</p>
+            <select name="hora" disabled>
+                <option value="">No disponible</option>
+            </select>
+        <% } else { %>
+            <select name="hora" required>
+                <% for (String hora : horasDisponibles) { %>
+                    <option value="<%= hora %>"><%= hora %></option>
+                <% } %>
+            </select>
+        <% } %>
         <br><br>
 
         <label>Mascota:</label>
@@ -79,7 +111,7 @@
         </div>
 
         <br>
-        <input type="submit" value="Agendar Cita">
+        <input type="submit" value="Agendar Cita" <%= diaBloqueado ? "disabled" : "" %>>
         <br><br>
         <a href="inicio.jsp">Volver al inicio</a>
     </form>

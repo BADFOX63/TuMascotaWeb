@@ -7,7 +7,7 @@ public class UsuarioDAO {
 
     // REGISTRO DE USUARIO
     public void registrarUsuario(Usuario usuario) throws Exception {
-        String sql = "INSERT INTO usuario (nombre, email, telefono, password) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO usuario (nombre, email, telefono, password, id_rol) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = Conexion.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -16,6 +16,7 @@ public class UsuarioDAO {
             stmt.setString(2, usuario.getEmail());
             stmt.setString(3, usuario.getTelefono());
             stmt.setString(4, usuario.getContraseña());
+            stmt.setInt(5,1);//id rol usuario
 
             int filas = stmt.executeUpdate();
 
@@ -53,7 +54,8 @@ public class UsuarioDAO {
                     rs.getString("nombre"),
                     rs.getString("email"),
                     rs.getString("telefono"),
-                    rs.getString("password")
+                    rs.getString("password"),
+                    rs.getInt("id_rol")
                 );
                 System.out.println("Usuario encontrado: " + usuario.getNombre());
             } else {
@@ -68,7 +70,8 @@ public class UsuarioDAO {
         return usuario;
     }
 
-public void actualizarPerfil(Usuario usuario) throws Exception {
+    //Actualizar el perfil de usuario
+    public void actualizarPerfil(Usuario usuario) throws Exception {
     String sql = "UPDATE usuario SET nombre = ?, email = ?, telefono = ?, password = ? WHERE id_usuario = ?";
 
     try (Connection conn = Conexion.getConnection();

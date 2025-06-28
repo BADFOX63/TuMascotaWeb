@@ -26,18 +26,19 @@ public class LoginServlet extends HttpServlet {
             UsuarioDAO dao = new UsuarioDAO();
             Usuario usuario = dao.validarUsuario(email, password);
 
-            if (usuario != null) {
-                // Usuario válido: guardar en sesión y reenviar a login.jsp con mensaje
-                HttpSession session = request.getSession();
-                session.setAttribute("usuario", usuario);
+           if (usuario != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("usuario", usuario);
 
-                request.setAttribute("mensaje", "Inicio de sesión exitoso");
-                request.getRequestDispatcher("inicio.jsp").forward(request, response);
-            } else {
-                // Usuario inválido
-                request.setAttribute("mensaje", "Correo o password incorrectos");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
+            if (usuario.getIdRol() == 2) {
+                response.sendRedirect("veterinario.jsp"); // Si es veterinario
+            }   else {
+        response.sendRedirect("inicio.jsp"); // Usuario normal
+    }
+} else {
+    request.setAttribute("mensaje", "Correo o contraseña incorrectos.");
+    request.getRequestDispatcher("login.jsp").forward(request, response);
+}
 
         } catch (Exception e) {
             e.printStackTrace();  // Se mostrará en la consola del servidor
